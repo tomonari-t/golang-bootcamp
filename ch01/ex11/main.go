@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -34,13 +35,15 @@ func fetch(url string, ch chan<- string) {
 	ch <- fmt.Sprintf("%.2fs	%7d	%s", secs, nbytes, url)
 }
 
+func startServe() {
+	log.Fatal(http.ListenAndServe("localhost:8000", nil))
+}
+
 func main() {
 	start := time.Now()
 	ch := make(chan string)
 	for _, url := range os.Args[1:] {
-		for i := 0; i < 2; i++ {
-			go fetch(url, ch)
-		}
+		go fetch(url, ch)
 	}
 	for range os.Args[1:] {
 		fmt.Println(<-ch)
