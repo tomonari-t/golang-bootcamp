@@ -19,17 +19,14 @@ func PopCount(x uint64) int {
 		pc[byte(x>>(7*8))])
 }
 
-func PopCountLoop(x uint64) int {
-	var pcForLoop [256]byte
-	for i := range pcForLoop {
-		pcForLoop[i] = pcForLoop[i/2] + byte(i&1)
+func PopCountByShift(x uint64) int {
+	count := 0
+
+	for i := 0; i < 64; i++ {
+		if x&1 == 1 {
+			count++
+		}
+		x >>= 1
 	}
-	return int(pcForLoop[byte(x>>(0*8))] +
-		pcForLoop[byte(x>>(1*8))] +
-		pcForLoop[byte(x>>(2*8))] +
-		pcForLoop[byte(x>>(3*8))] +
-		pcForLoop[byte(x>>(4*8))] +
-		pcForLoop[byte(x>>(5*8))] +
-		pcForLoop[byte(x>>(6*8))] +
-		pcForLoop[byte(x>>(7*8))])
+	return count
 }
