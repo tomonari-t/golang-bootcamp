@@ -31,9 +31,10 @@ func main() {
 			num := toF16(stdin.Text())
 			show(num)
 		}
-	}
-	for _, arg := range os.Args[1:] {
-		num := toF16(arg)
-		show(num)
+	} else {
+		for _, arg := range os.Args[1:] {
+			num := toF16(arg)
+			show(num)
+		}
 	}
 }

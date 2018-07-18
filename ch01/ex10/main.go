@@ -8,7 +8,8 @@ import (
 	"time"
 )
 
-func fetch(url string, ch chan<- string) {
+func fetch(url string, ch chan<- string) 
+{
 	start := time.Now()
 	resp, err := http.Get(url)
 	if err != nil {
